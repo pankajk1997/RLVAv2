@@ -749,7 +749,7 @@ echo $clipboard > $CLIP_FILE								#Even if string doesn't contain any command,
 fi
 x=$(cat "$CLIP_FILE")										#Variable updated with new value to used for further processing in loop
 
-done
+done														#For loop ends here
 
 # Substring Using Commands
 
