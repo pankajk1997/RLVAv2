@@ -2,11 +2,9 @@
 
 CLIP_FILE=clipfile.txt;										#File used to store changing string values within conditional and loop statements
 COUNTER_FILE=counter.txt;									#File used to store status of command execution (0 for Failure, 1 for Success & 2 for Welcome)
-echo 2 > $COUNTER_FILE;										#Initial Status is 2 which signify successful program initiation
 
 x="";														#Resetting variables to process next string
 wd="";
-echo "voice assistant started --panky" > $CLIP_FILE;
 
 origclip=$1													#Taking string as input
 origclip=${origclip,,}										#Converting string to lower case
@@ -116,13 +114,13 @@ clipboard=$x$wd;
 	echo $clipboard > $CLIP_FILE;
 	fi &
 
-	if [[ "$origclip" == *open*facebook* ]];
+	if [[ "$clipboard" == *open*facebook* ]];
 	then
 	echo 1 > $COUNTER_FILE;
 	sensible-browser 'https://www.facebook.com/';
 	clipboard=${clipboard/*facebook/};
 	echo $clipboard > $CLIP_FILE;
-	elif [[ "$origclip" == *facebook*open* ]];
+	elif [[ "$clipboard" == *facebook*open* ]];
 	then
 	echo 1 > $COUNTER_FILE;
 	sensible-browser 'https://www.facebook.com/';
@@ -130,13 +128,13 @@ clipboard=$x$wd;
 	echo $clipboard > $CLIP_FILE;
 	fi &
 
-	if [[ "$origclip" == *open*inst*gram* ]];
+	if [[ "$clipboard" == *open*inst*gram* ]];
 	then
 	echo 1 > $COUNTER_FILE;
 	sensible-browser 'https://www.instagram.com/';
 	clipboard=${clipboard/*gram/};
 	echo $clipboard > $CLIP_FILE;
-	elf [[ "$origclip" == *inst*gram*open* ]];
+	elif [[ "$clipboard" == *inst*gram*open* ]];
 	then
 	echo 1 > $COUNTER_FILE;
 	sensible-browser 'https://www.instagram.com/';
@@ -645,33 +643,33 @@ clipboard=$x$wd;
 	if [[ "$clipboard" == *clean*computer* ]];
 	then
 	echo 1 > $COUNTER_FILE;
-	echo "10<,mmXLSQ" | sudo -S apt-get autoremove --purge -y &
-	echo "10<,mmXLSQ" | sudo -S apt-get autoclean &
-	echo "10<,mmXLSQ" | sudo -S apt-get clean all &
+	echo "QSLXmm,<01" | sudo -S apt-get autoremove --purge -y &
+	echo "QSLXmm,<01" | sudo -S apt-get autoclean &
+	echo "QSLXmm,<01" | sudo -S apt-get clean all &
 	clipboard=${clipboard/*computer/};
 	echo $clipboard > $CLIP_FILE;
 	elif [[ "$clipboard" == *computer*clean* ]]||[[ "$clipboard" == *system*clean* ]];
 	then
 	echo 1 > $COUNTER_FILE;
-	echo "10<,mmXLSQ" | sudo -S apt-get autoremove --purge -y &
-	echo "10<,mmXLSQ" | sudo -S apt-get autoclean &
-	echo "10<,mmXLSQ" | sudo -S apt-get clean all &
+	echo "QSLXmm,<01" | sudo -S apt-get autoremove --purge -y &
+	echo "QSLXmm,<01" | sudo -S apt-get autoclean &
+	echo "QSLXmm,<01" | sudo -S apt-get clean all &
 	clipboard=${clipboard/*clean/};
 	echo $clipboard > $CLIP_FILE;
 	elif [[ "$clipboard" == *clean*system* ]]||[[ "$clipboard" == *clean*system* ]];
 	then
 	echo 1 > $COUNTER_FILE;
-	echo "10<,mmXLSQ" | sudo -S apt-get autoremove --purge -y &
-	echo "10<,mmXLSQ" | sudo -S apt-get autoclean &
-	echo "10<,mmXLSQ" | sudo -S apt-get clean all &
+	echo "QSLXmm,<01" | sudo -S apt-get autoremove --purge -y &
+	echo "QSLXmm,<01" | sudo -S apt-get autoclean &
+	echo "QSLXmm,<01" | sudo -S apt-get clean all &
 	clipboard=${clipboard/*system/};
 	echo $clipboard > $CLIP_FILE;
 	elif [[ "$clipboard" == *system*clean* ]];
 	then
 	echo 1 > $COUNTER_FILE;
-	echo "10<,mmXLSQ" | sudo -S apt-get autoremove --purge -y &
-	echo "10<,mmXLSQ" | sudo -S apt-get autoclean &
-	echo "10<,mmXLSQ" | sudo -S apt-get clean all &
+	echo "QSLXmm,<01" | sudo -S apt-get autoremove --purge -y &
+	echo "QSLXmm,<01" | sudo -S apt-get autoclean &
+	echo "QSLXmm,<01" | sudo -S apt-get clean all &
 	clipboard=${clipboard/*clean/};
 	echo $clipboard > $CLIP_FILE;
 	fi &
@@ -745,10 +743,10 @@ clipboard=$x$wd;
 	echo $clipboard > $CLIP_FILE;
 	fi &
 
-#if [ "$(head -c 1 $COUNTER_FILE)" == "0" ]
-#then
-#echo $clipboard > $CLIP_FILE
-#fi
+if [ "$(head -c 1 $COUNTER_FILE)" == "0" ]
+then
+echo $clipboard > $CLIP_FILE
+fi
 x=$(cat "$CLIP_FILE")
 
 done
@@ -809,16 +807,9 @@ done
 count=$(head -c 1 $COUNTER_FILE);
 if [ $count == '1' ];
 then
-zenity --notification --title "Success" --text "$origclip";
-echo 2 > $COUNTER_FILE;
-elif [ $count == '0' ];
-then
-if [[ $origclip == *voice*assistance*panky* ]];
-then
-zenity --notification --title "Welcome" --text "$origclip";
-echo 2 > $COUNTER_FILE;
+zenity --notification --text "Success: $origclip";
+echo 0 > $COUNTER_FILE;
 else
-zenity --notification --title "Failure" --text "$origclip";
-echo 2 > $COUNTER_FILE;
-fi &
+zenity --notification --text "Failure: $origclip";
+echo 0 > $COUNTER_FILE;
 fi &
