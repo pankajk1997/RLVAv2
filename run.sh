@@ -1,11 +1,10 @@
 #!/bin/bash
 
 CLIP_FILE=clipfile.txt;										#File used to store changing string values within conditional and loop statements
-COUNTER_FILE=counter.txt;									#File used to store status of command execution
-echo 2 > $COUNTER_FILE;										#Initial Status is 2 which signify successful program execution
+COUNTER_FILE=counter.txt;									#File used to store status of command execution (0 for Failure, 1 for Success & 2 for Welcome)
+echo 2 > $COUNTER_FILE;										#Initial Status is 2 which signify successful program initiation
 
-															#Resetting variables to process next string
-x="";
+x="";														#Resetting variables to process next string
 wd="";
 echo "voice assistant started --panky" > $CLIP_FILE;
 
@@ -14,10 +13,10 @@ origclip=${origclip,,}										#Converting string to lower case
 
 for wd in $origclip; do										#Checking string word by word
 
-echo 0 > $COUNTER_FILE;
+echo 0 > $COUNTER_FILE;										#Setting Status as 0 which if persist whill signify failure of command execution
 clipboard=$x$wd;
 
-# Folder Opening Commands
+# Opening Commands
 
 	if [[ "$clipboard" == *open*document* ]];
 	then
@@ -29,7 +28,7 @@ clipboard=$x$wd;
 	then
 	echo 1 > $COUNTER_FILE;
 	xdg-open ~/Documents;
-	clipboard=${clipboard/*open/};
+	clipboard=${clipboard/*open/};							#This line is different from previous conditional statement allowing more natural coversation as commands
 	echo $clipboard > $CLIP_FILE;
 	fi &
 
@@ -99,6 +98,48 @@ clipboard=$x$wd;
 	then
 	echo 1 > $COUNTER_FILE;
 	xdg-open ~/Videos;
+	clipboard=${clipboard/*open/};
+	echo $clipboard > $CLIP_FILE;
+	fi &
+
+	if [[ "$clipboard" == *play*news* ]];
+	then
+	echo 1 > $COUNTER_FILE;
+	sensible-browser 'https://tunein.com/radio/NDTV-24X7-s151565/';
+	clipboard=${clipboard/*news/};
+	echo $clipboard > $CLIP_FILE;
+	elif [[ "$clipboard" == *news*play* ]];
+	then
+	echo 1 > $COUNTER_FILE;
+	sensible-browser 'https://tunein.com/radio/NDTV-24X7-s151565/';
+	clipboard=${clipboard/*play/};
+	echo $clipboard > $CLIP_FILE;
+	fi &
+
+	if [[ "$origclip" == *open*facebook* ]];
+	then
+	echo 1 > $COUNTER_FILE;
+	sensible-browser 'https://www.facebook.com/';
+	clipboard=${clipboard/*facebook/};
+	echo $clipboard > $CLIP_FILE;
+	elif [[ "$origclip" == *facebook*open* ]];
+	then
+	echo 1 > $COUNTER_FILE;
+	sensible-browser 'https://www.facebook.com/';
+	clipboard=${clipboard/*open/};
+	echo $clipboard > $CLIP_FILE;
+	fi &
+
+	if [[ "$origclip" == *open*inst*gram* ]];
+	then
+	echo 1 > $COUNTER_FILE;
+	sensible-browser 'https://www.instagram.com/';
+	clipboard=${clipboard/*gram/};
+	echo $clipboard > $CLIP_FILE;
+	elf [[ "$origclip" == *inst*gram*open* ]];
+	then
+	echo 1 > $COUNTER_FILE;
+	sensible-browser 'https://www.instagram.com/';
 	clipboard=${clipboard/*open/};
 	echo $clipboard > $CLIP_FILE;
 	fi &
@@ -185,7 +226,72 @@ clipboard=$x$wd;
 	echo $clipboard > $CLIP_FILE;
 	fi &
 
+	if [[ "$clipboard" == *lock*screen* ]];
+	then
+	echo 1 > $COUNTER_FILE;
+	sleep 2;xdotool key super+l;
+	clipboard=${clipboard/*screen/};
+	echo $clipboard > $CLIP_FILE;
+	elif [[ "$clipboard" == *screen*lock* ]];
+	then
+	echo 1 > $COUNTER_FILE;
+	sleep 2;xdotool key super+l;
+	clipboard=${clipboard/*lock/};
+	echo $clipboard > $CLIP_FILE;
+	fi &
+
+	if [[ "$clipboard" == *start*menu* ]];
+	then
+	echo 1 > $COUNTER_FILE;
+	sleep 2;xdotool key super+a;
+	clipboard=${clipboard/*menu/};
+	echo $clipboard > $CLIP_FILE;
+	fi &
+
+	if [[ "$clipboard" == *show*overview* ]];
+	then
+	echo 1 > $COUNTER_FILE;
+	sleep 2;xdotool key super+s;
+	clipboard=${clipboard/*overview/};
+	echo $clipboard > $CLIP_FILE;
+	elif [[ "$clipboard" == *overview*show* ]];
+	then
+	echo 1 > $COUNTER_FILE;
+	sleep 2;xdotool key super+s;
+	clipboard=${clipboard/*show/};
+	echo $clipboard > $CLIP_FILE;
+	fi &
+
+	if [[ "$clipboard" == *show*notification* ]];
+	then
+	echo 1 > $COUNTER_FILE;
+	sleep 2;xdotool key super+v;
+	clipboard=${clipboard/*notification/};
+	echo $clipboard > $CLIP_FILE;
+	elif [[ "$clipboard" == *notification*show* ]];
+	then
+	echo 1 > $COUNTER_FILE;
+	sleep 2;xdotool key super+v;
+	clipboard=${clipboard/*show/};
+	echo $clipboard > $CLIP_FILE;
+	fi &
+
+	if [[ "$clipboard" == *run*command* ]];
+	then
+	echo 1 > $COUNTER_FILE;
+	sleep 2;xdotool key alt+F2;
+	clipboard=${clipboard/*command/};
+	echo $clipboard > $CLIP_FILE;
+	elif [[ "$clipboard" == *command*run* ]];
+	then
+	echo 1 > $COUNTER_FILE;
+	sleep 2;xdotool key alt+F2;
+	clipboard=${clipboard/*run/};
+	echo $clipboard > $CLIP_FILE;
+	fi &
+
 # Window Management Commands
+
 	if [[ "$clipboard" == *refresh* ]];
 	then
 	echo 1 > $COUNTER_FILE;
@@ -214,29 +320,11 @@ clipboard=$x$wd;
 	sleep 2;xdotool key super+Right;
 	clipboard=${clipboard/*right/};
 	echo $clipboard > $CLIP_FILE;
-	elif [[ "$clipboard" == *left*move* ]];
-	then
-	echo 1 > $COUNTER_FILE;
-	sleep 2;xdotool key super+Left;
-	clipboard=${clipboard/*move/};
-	echo $clipboard > $CLIP_FILE;
-	elif [[ "$clipboard" == *right*move* ]];
-	then
-	echo 1 > $COUNTER_FILE;
-	sleep 2;xdotool key super+Right;
-	clipboard=${clipboard/*move/};
-	echo $clipboard > $CLIP_FILE;
 	elif [[ "$clipboard" == *move*window* ]];
 	then
 	echo 1 > $COUNTER_FILE;
 	sleep 2;xdotool key alt+F7;
 	clipboard=${clipboard/*window/};
-	echo $clipboard > $CLIP_FILE;
-	elif [[ "$clipboard" == *window*move* ]];
-	then
-	echo 1 > $COUNTER_FILE;
-	sleep 2;xdotool key alt+F7;
-	clipboard=${clipboard/*move/};
 	echo $clipboard > $CLIP_FILE;
 	fi &
 
@@ -342,11 +430,19 @@ clipboard=$x$wd;
 	sleep 2;xdotool key shift+alt+Tab;
 	clipboard=${clipboard/*window/};
 	echo $clipboard > $CLIP_FILE;
-	elif [[ "$clipboard" == *switch*window* ]];
+	fi &
+
+	if [[ "$clipboard" == *next*workspace* ]];
 	then
 	echo 1 > $COUNTER_FILE;
-	sleep 2;xdotool key shift+super+w;
-	clipboard=${clipboard/*window/};
+	sleep 2;xdotool key super+Page_Down;
+	clipboard=${clipboard/*workspace/};
+	echo $clipboard > $CLIP_FILE;
+	elif [[ "$clipboard" == *previous*workspace* ]];
+	then
+	echo 1 > $COUNTER_FILE;
+	sleep 2;xdotool key super+Page_Up;
+	clipboard=${clipboard/*workspace/};
 	echo $clipboard > $CLIP_FILE;
 	fi &
 
@@ -384,8 +480,6 @@ clipboard=$x$wd;
 
 # Miscellaneous
 
-	##################################################################################################################################Check keyboard hotkeys for more commands
-
 	if [[ "$clipboard" == *increas*volume* ]]||[[ "$clipboard" == *enhanc*volume* ]];
 	then
 	echo 1 > $COUNTER_FILE;
@@ -411,21 +505,21 @@ clipboard=$x$wd;
 	then
 	echo 1 > $COUNTER_FILE;
 	amixer set Master 15%-;
-	pactl set-sink-volume 0 +15%;
+	pactl set-sink-volume 0 -15%;
 	clipboard=${clipboard/*volume/};
 	echo $clipboard > $CLIP_FILE;
 	elif [[ "$clipboard" == *volume*decreas* ]];
 	then
 	echo 1 > $COUNTER_FILE;
 	amixer set Master 15%-;
-	pactl set-sink-volume 0 +15%;
+	pactl set-sink-volume 0 -15%;
 	clipboard=${clipboard/*decreas/};
 	echo $clipboard > $CLIP_FILE;
 	elif [[ "$clipboard" == *volume*reduc* ]];
 	then
 	echo 1 > $COUNTER_FILE;
 	amixer set Master 15%-;
-	pactl set-sink-volume 0 +15%;
+	pactl set-sink-volume 0 -15%;
 	clipboard=${clipboard/*reduc/};
 	echo $clipboard > $CLIP_FILE;
 	elif [[ "$clipboard" == *volume*100* ]];
@@ -547,6 +641,7 @@ clipboard=$x$wd;
 	fi &
 
 # Long Scripts
+
 	if [[ "$clipboard" == *clean*computer* ]];
 	then
 	echo 1 > $COUNTER_FILE;
@@ -582,6 +677,7 @@ clipboard=$x$wd;
 	fi &
 
 # More Commands
+
 	if [[ "$clipboard" == *stop*record* ]];
 	then
 	echo 1 > $COUNTER_FILE;
@@ -649,15 +745,16 @@ clipboard=$x$wd;
 	echo $clipboard > $CLIP_FILE;
 	fi &
 
-if [ "$(head -c 1 $COUNTER_FILE)" == "0" ]			#Check if need to remove this ##########################################################################################
-then
-echo $clipboard > $CLIP_FILE
-fi
+#if [ "$(head -c 1 $COUNTER_FILE)" == "0" ]
+#then
+#echo $clipboard > $CLIP_FILE
+#fi
 x=$(cat "$CLIP_FILE")
 
 done
 
-# Browser Commands
+# Substring Using Commands
+
 	if [[ "$clipboard" == *find* ]];
 	then
 	echo 1 > $COUNTER_FILE;
@@ -698,29 +795,8 @@ done
 	sensible-browser 'https://www.youtube.com/';
 	fi &
 
-	if [[ "$origclip" == *news* ]];
-	then
-	echo 1 > $COUNTER_FILE;
-	sensible-browser 'https://tunein.com/radio/NDTV-24X7-s151565/';
-	fi &
-
-	if [[ "$origclip" == *facebook* ]];
-	then
-	echo 1 > $COUNTER_FILE;
-	sensible-browser 'https://www.facebook.com/';
-	elif [[ "$origclip" == *face*book* ]];
-	then
-	echo 1 > $COUNTER_FILE;
-	sensible-browser 'https://www.facebook.com/';
-	fi &
-
-	if [[ "$origclip" == *inst*gram* ]];
-	then
-	echo 1 > $COUNTER_FILE;
-	sensible-browser 'https://www.instagram.com/';
-	fi &
-
 # Type Command
+
 	if [[ $origclip == *type* ]];
 	then
 	echo 1 > $COUNTER_FILE;
@@ -728,9 +804,8 @@ done
 	sleep 2;xdotool type "$substring";
 	fi &
 
-prevclip=$origclip;
-
 # Notify Command Status
+
 count=$(head -c 1 $COUNTER_FILE);
 if [ $count == '1' ];
 then
@@ -738,9 +813,10 @@ zenity --notification --title "Success" --text "$origclip";
 echo 2 > $COUNTER_FILE;
 elif [ $count == '0' ];
 then
-if [[ $origclip == *voice*assistance*panky* ]]; then
-	zenity --notification --title "Success" --text "$origclip";
-	echo 2 > $COUNTER_FILE;
+if [[ $origclip == *voice*assistance*panky* ]];
+then
+zenity --notification --title "Welcome" --text "$origclip";
+echo 2 > $COUNTER_FILE;
 else
 zenity --notification --title "Failure" --text "$origclip";
 echo 2 > $COUNTER_FILE;
