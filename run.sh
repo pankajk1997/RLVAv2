@@ -745,9 +745,9 @@ clipboard=$x$wd;
 
 if [ "$(head -c 1 $COUNTER_FILE)" == "0" ]
 then
-echo $clipboard > $CLIP_FILE
+echo $clipboard > $CLIP_FILE								#Even if string doesn't contain any command, add it to clipfile for further processing in loop
 fi
-x=$(cat "$CLIP_FILE")
+x=$(cat "$CLIP_FILE")										#Variable updated with new value to used for further processing in loop
 
 done
 
@@ -804,12 +804,12 @@ done
 
 # Notify Command Status
 
-count=$(head -c 1 $COUNTER_FILE);
+count=$(head -c 1 $COUNTER_FILE);							#Reading first character of counter file to check status of command execution
 if [ $count == '1' ];
 then
-zenity --notification --text "Success: $origclip";
+zenity --notification --text "Success: $origclip";			#Notify successful command execution
 echo 0 > $COUNTER_FILE;
 else
-zenity --notification --text "Failure: $origclip";
+zenity --notification --text "Failure: $origclip";			#Notify failed command execution
 echo 0 > $COUNTER_FILE;
 fi &
