@@ -10,11 +10,11 @@ wd="";
 
 origclip=$(curl -s --header 'Access-Token: o.JRM3Ersshl0fQfaipUzfM6QWjmgDydQx' --data-urlencode active="true" --data-urlencode limit="1" --get https://api.pushbullet.com/v2/pushes | jq '.pushes[0].body')
 origclip=${origclip,,}										#Converting string to lower case
+echo 0 > $COUNTER_FILE;										#Setting Status as 0 which if persist whill signify failure of command execution
 
 if [[ $origclip != $prevclip ]]; then						#Prevent same command from running multiple times
 for wd in $origclip; do										#Checking string word by word
 
-echo 0 > $COUNTER_FILE;										#Setting Status as 0 which if persist whill signify failure of command execution
 clipboard=$x$wd;
 
 # Opening Commands
@@ -812,10 +812,10 @@ prevclip=$origclip;											#Variable updated with new value to prevent runnin
 count=$(head -c 1 $COUNTER_FILE);							#Reading first character of counter file to check status of command execution
 if [ $count == '1' ];
 then
-zenity --notification --text "Success: $origclip";			#Notify successful command execution
+zenity --notification --timeout=3 --text "Success: $origclip";			#Notify successful command execution
 echo 0 > $COUNTER_FILE;
 else
-zenity --notification --text "Failure: $origclip";			#Notify failed command execution
+zenity --notification --timeout=3 --text "Failure: $origclip";			#Notify failed command execution
 echo 0 > $COUNTER_FILE;
 fi &
 
