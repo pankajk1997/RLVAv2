@@ -1,1 +1,1 @@
-Feature Rich Linux Voice Assistant version 2
+Featured Remote Linux Voice Assistant version 2
