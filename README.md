@@ -1,1 +1,1 @@
-Featured Remote Linux Voice Assistant version 2
+Remote Linux Voice Assistant version 2
