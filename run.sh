@@ -1,13 +1,18 @@
 #!/bin/bash
 
+# Requirements:
+# sudo apt install jq xdotool ffmpeg
+
 CLIP_FILE=clipfile.txt;										#File used to store changing string values within conditional and loop statements
 COUNTER_FILE=counter.txt;									#File used to store status of command execution (0 for Failure, 1 for Success & 2 for Welcome)
+PREVCLIP_FILE=prevclip.txt
 
 while /bin/true; do											#Infinite loop
 sleep 2;
 x="";														#Resetting variables to process next string
 wd="";
 
+prevclip=$(cat $PREVCLIP_FILE)
 origclip=$(curl -s --header 'Access-Token: o.JRM3Ersshl0fQfaipUzfM6QWjmgDydQx' --data-urlencode active="true" --data-urlencode limit="1" --get https://api.pushbullet.com/v2/pushes | jq '.pushes[0].body')
 origclip=${origclip,,}										#Converting string to lower case
 echo 0 > $COUNTER_FILE;										#Setting Status as 0 which if persist whill signify failure of command execution
@@ -753,6 +758,8 @@ fi
 x=$(cat "$CLIP_FILE")										#Variable updated with new value to used for further processing in loop
 
 done														#For loop ends here
+
+echo $origclip > $PREVCLIP_FILE
 
 # Substring Using Commands
 
