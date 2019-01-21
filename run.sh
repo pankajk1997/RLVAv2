@@ -17,7 +17,6 @@ origclip=$(curl -s --header 'Access-Token: o.JRM3Ersshl0fQfaipUzfM6QWjmgDydQx' -
 origclip=${origclip,,}										#Converting string to lower case
 echo 0 > $COUNTER_FILE;										#Setting Status as 0 which if persist whill signify failure of command execution
 
-if [[ $origclip != $prevclip ]]; then						#Prevent same command from running multiple times
 if [[ $origclip != "" && $origclip != $prevclip ]]; then						#Prevent same command from running multiple times
 for wd in $origclip; do										#Checking string word by word
 
