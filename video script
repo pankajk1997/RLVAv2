@@ -1,0 +1,72 @@
+
+yes can you open documents
+yes okay open downloads
+
+All these commands can be run from google assistant but to show you everything faster I am switching to the app.
+
+let's just open home
+
+Similarly, you can open other folders like pictures, videos & music. Your commands can be a natural conversation like the following command.
+
+can't you open root directory for me?
+
+open facebook and Instagram
+open calculator and text editor 
+run terminal and task manager
+
+show start menu
+show overview
+
+Similarly, you can show notifications or run command window.
+
+Similarly, you can say command to lock the screen, restart, suspend or shutdown which I don't want to do right now.
+
+play music
+next music
+previous music
+increase volume
+reduce volume
+switch to volume hundred per cent
+stop music
+
+Similarly, you can mute the volume.
+
+open file manager
+select all
+refresh
+move left
+move right
+move window
+open youtube
+go back
+go forward
+page down
+scroll up
+minimise
+maximise
+zoom in
+zoom out
+zoom default
+new window
+new tab
+next tab
+previous tab
+next window
+previous window
+next workspace
+previous workspace
+close current tab
+close current window
+
+current screenshot
+search google Pankaj
+find Pankaj
+search YouTube electronics topper
+type I am cool 
+
+If you want to use this program for yourself then all you have to do is replace the pushbullet api key in the code with your pushbullet api key which you can easily get after logging in to the pushbullet website. And later if you want to send commands from google assistant then you have to setup IFTTT.
+
+you can also add custom commands in the script. Like the following command.
+clean system
+play news
+

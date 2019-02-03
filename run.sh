@@ -121,6 +121,20 @@ clipboard=$x$wd;
 	clipboard=${clipboard/*play/};
 	echo $clipboard > $CLIP_FILE;
 	fi &
+	
+	if [[ "$clipboard" == *open*browser* ]];
+	then
+	echo 1 > $COUNTER_FILE;
+	sensible-browser;
+	clipboard=${clipboard/*browser/};
+	echo $clipboard > $CLIP_FILE;
+	elif [[ "$clipboard" == *browser*open* ]];
+	then
+	echo 1 > $COUNTER_FILE;
+	sensible-browser;
+	clipboard=${clipboard/*open/};
+	echo $clipboard > $CLIP_FILE;
+	fi &
 
 	if [[ "$clipboard" == *open*facebook* ]];
 	then
@@ -152,19 +166,7 @@ clipboard=$x$wd;
 
 # Run Programs Commands
 
-	if [[ "$clipboard" == *open*monitor* ]];
-	then
-	echo 1 > $COUNTER_FILE;
-	gnome-system-monitor;
-	clipboard=${clipboard/*monitor/};
-	echo $clipboard > $CLIP_FILE;
-	elif [[ "$clipboard" == *monitor*open* ]];
-	then
-	echo 1 > $COUNTER_FILE;
-	gnome-system-monitor;
-	clipboard=${clipboard/*open/};
-	echo $clipboard > $CLIP_FILE;
-	elif [[ "$clipboard" == *task*manager* ]];
+        if [[ "$clipboard" == *task*manager* ]];
 	then
 	echo 1 > $COUNTER_FILE;
 	gnome-system-monitor;
@@ -172,30 +174,10 @@ clipboard=$x$wd;
 	echo $clipboard > $CLIP_FILE;
 	fi &
 
-	if [[ "$clipboard" == *open*calculator* ]];
+        if [[ "$clipboard" == *calculator* ]];
 	then
 	echo 1 > $COUNTER_FILE;
 	gnome-calculator;
-	clipboard=${clipboard/*calculator/};
-	echo $clipboard > $CLIP_FILE;
-	elif [[ "$clipboard" == *calculator*open* ]];
-	then
-	echo 1 > $COUNTER_FILE;
-	gnome-calculator;
-	clipboard=${clipboard/*open/};
-	echo $clipboard > $CLIP_FILE;
-	fi &
-
-	if [[ "$clipboard" == *open*browser* ]];
-	then
-	echo 1 > $COUNTER_FILE;
-	sensible-browser;
-	clipboard=${clipboard/*browser/};
-	echo $clipboard > $CLIP_FILE;
-	elif [[ "$clipboard" == *browser*open* ]];
-	then
-	echo 1 > $COUNTER_FILE;
-	sensible-browser;
 	clipboard=${clipboard/*open/};
 	echo $clipboard > $CLIP_FILE;
 	fi &
@@ -203,7 +185,7 @@ clipboard=$x$wd;
 	if [[ "$clipboard" == *text*editor* ]];
 	then
 	echo 1 > $COUNTER_FILE;
-	atom;
+	subl;
 	if [ $? != 0 ];
 	then
 	gnome-text-editor;
@@ -229,20 +211,6 @@ clipboard=$x$wd;
 	echo 1 > $COUNTER_FILE;
 	gnome-terminal;
 	clipboard=${clipboard/*shell/};
-	echo $clipboard > $CLIP_FILE;
-	fi &
-
-	if [[ "$clipboard" == *lock*screen* ]];
-	then
-	echo 1 > $COUNTER_FILE;
-	sleep 2;xdotool key super+l;
-	clipboard=${clipboard/*screen/};
-	echo $clipboard > $CLIP_FILE;
-	elif [[ "$clipboard" == *screen*lock* ]];
-	then
-	echo 1 > $COUNTER_FILE;
-	sleep 2;xdotool key super+l;
-	clipboard=${clipboard/*lock/};
 	echo $clipboard > $CLIP_FILE;
 	fi &
 
@@ -293,6 +261,20 @@ clipboard=$x$wd;
 	echo 1 > $COUNTER_FILE;
 	sleep 2;xdotool key alt+F2;
 	clipboard=${clipboard/*run/};
+	echo $clipboard > $CLIP_FILE;
+	fi &
+
+	if [[ "$clipboard" == *lock*screen* ]];
+	then
+	echo 1 > $COUNTER_FILE;
+	sleep 2;xdotool key super+l;
+	clipboard=${clipboard/*screen/};
+	echo $clipboard > $CLIP_FILE;
+	elif [[ "$clipboard" == *screen*lock* ]];
+	then
+	echo 1 > $COUNTER_FILE;
+	sleep 2;xdotool key super+l;
+	clipboard=${clipboard/*lock/};
 	echo $clipboard > $CLIP_FILE;
 	fi &
 
@@ -348,13 +330,13 @@ clipboard=$x$wd;
 	echo $clipboard > $CLIP_FILE;
 	fi &
 
-	if [[ "$clipboard" == *page*up* ]]||[[ "$clipboard" == *scroll*up* ]]||[[ "$clipboard" == *go*up* ]];
+	if [[ "$clipboard" == *page*up* ]]||[[ "$clipboard" == *scroll*up* ]];
 	then
 	echo 1 > $COUNTER_FILE;
 	sleep 2;xdotool key Page_Up;
 	clipboard=${clipboard/*up/};
 	echo $clipboard > $CLIP_FILE;
-	elif [[ "$clipboard" == *page*down* ]]||[[ "$clipboard" == *scroll*down* ]]||[[ "$clipboard" == *go*down* ]];
+	elif [[ "$clipboard" == *page*down* ]]||[[ "$clipboard" == *scroll*down* ]];
 	then
 	echo 1 > $COUNTER_FILE;
 	sleep 2;xdotool key Page_Down;
@@ -684,31 +666,7 @@ clipboard=$x$wd;
 
 # More Commands
 
-	if [[ "$clipboard" == *stop*record* ]];
-	then
-	echo 1 > $COUNTER_FILE;
-	pkill ffmpeg;
-	clipboard=${clipboard/*screen/};
-	echo $clipboard > $CLIP_FILE;
-	elif [[ "$clipboard" == *record*stop* ]];
-	then
-	echo 1 > $COUNTER_FILE;
-	pkill ffmpeg;
-	clipboard=${clipboard/*record/};
-	echo $clipboard > $CLIP_FILE;
-	elif [[ "$clipboard" == *record*screen* ]];
-	then
-	echo 1 > $COUNTER_FILE;
-	ffmpeg -y -f alsa -i default -f x11grab -s 1024x768 -r 30 -i :0.0 -preset ultrafast -acodec aac -strict experimental ~/Videos/recorded.mp4 &
-	clipboard=${clipboard/*screen/};
-	echo $clipboard > $CLIP_FILE;
-	elif [[ "$clipboard" == *screen*record* ]];
-	then
-	echo 1 > $COUNTER_FILE;
-	ffmpeg -y -f alsa -i default -f x11grab -s 1024x768 -r 30 -i :0.0 -preset ultrafast -acodec aac -strict experimental ~/Videos/recorded.mp4 &
-	clipboard=${clipboard/*record/};
-	echo $clipboard > $CLIP_FILE;
-	elif [[ "$clipboard" == *current*screenshot* ]];
+	if [[ "$clipboard" == *current*screenshot* ]];
 	then
 	echo 1 > $COUNTER_FILE;
 	sleep 2;xdotool key alt+Print;
